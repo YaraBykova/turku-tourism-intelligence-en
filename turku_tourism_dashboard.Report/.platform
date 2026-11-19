@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "turku_tourism_dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c63e3f92-43fc-4a46-b9e9-2defe1683af6"
+  }
+}

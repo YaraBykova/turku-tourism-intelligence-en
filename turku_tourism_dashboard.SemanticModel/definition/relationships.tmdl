@@ -1,0 +1,9 @@
+relationship 5dafcb89-37c0-4471-bb44-f29658a25e66
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tourism.month
+	toColumn: LocalDateTable_343b1332-e247-441e-a7a1-7602260186c7.Date
+
+relationship 61217695-70ff-45ad-b939-4ee187d51c16
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tourism.retrieved_at_utc
+	toColumn: LocalDateTable_74d683d5-b532-40f8-b346-3a87b52944b0.Date

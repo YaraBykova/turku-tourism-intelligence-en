@@ -1,0 +1,457 @@
+table Tourism
+	lineageTag: 544c7601-af12-417a-8118-1f117a380e5f
+
+	measure 'Total Nights' = SUM(Tourism[hotel_nights])
+		formatString: #,0
+		displayFolder: Metrics
+		lineageTag: be33c5c8-eb18-4d73-b521-07d7cbb371ca
+
+	measure 'Domestic Nights' = SUM(Tourism[domestic_nights])
+		formatString: #,0
+		displayFolder: Metrics
+		lineageTag: aaa693aa-1aa2-40f5-8dc9-e5d13bc5b816
+
+	measure 'Foreign Nights' = SUM(Tourism[foreign_nights])
+		formatString: #,0
+		displayFolder: Metrics
+		lineageTag: fa134bc1-5c97-4a7d-b701-a344b96ef762
+
+	measure 'Foreign Share' = DIVIDE([Foreign Nights], [Total Nights])
+		formatString: 0.00%
+		displayFolder: Metrics
+		lineageTag: 8fbd85e1-f46f-5470-9e1b-24ce8b016201
+
+	measure 'Nights Previous Period' =
+			VAR ChosenYear = SELECTEDVALUE(Tourism[year])
+			VAR ObservedMonths = VALUES(Tourism[month_number])
+			VAR Cities = VALUES(Tourism[municipality_code])
+			VAR PriorRows =
+			    CALCULATETABLE(
+			        Tourism,
+			        REMOVEFILTERS(Tourism),
+			        TREATAS(Cities, Tourism[municipality_code]),
+			        Tourism[year] = ChosenYear - 1,
+			        TREATAS(ObservedMonths, Tourism[month_number])
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK(ChosenYear)
+			            && COUNTROWS(Tourism) > 0
+			            && COUNTROWS(PriorRows) = COUNTROWS(ObservedMonths) * COUNTROWS(Cities),
+			        SUMX(PriorRows, Tourism[hotel_nights])
+			    )
+		formatString: #,0
+		displayFolder: Period comparison
+		lineageTag: ac987db4-772d-5ee8-9ac1-32d0f5dc64bd
+
+	measure 'Domestic Previous Period' =
+			VAR ChosenYear = SELECTEDVALUE(Tourism[year])
+			VAR ObservedMonths = VALUES(Tourism[month_number])
+			VAR Cities = VALUES(Tourism[municipality_code])
+			VAR PriorRows =
+			    CALCULATETABLE(
+			        Tourism,
+			        REMOVEFILTERS(Tourism),
+			        TREATAS(Cities, Tourism[municipality_code]),
+			        Tourism[year] = ChosenYear - 1,
+			        TREATAS(ObservedMonths, Tourism[month_number])
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK(ChosenYear)
+			            && COUNTROWS(Tourism) > 0
+			            && COUNTROWS(PriorRows) = COUNTROWS(ObservedMonths) * COUNTROWS(Cities),
+			        SUMX(PriorRows, Tourism[domestic_nights])
+			    )
+		formatString: #,0
+		displayFolder: Period comparison
+		lineageTag: 87cab7e3-e423-58f0-8ffa-974eebc2ef9d
+
+	measure 'Foreign Previous Period' =
+			VAR ChosenYear = SELECTEDVALUE(Tourism[year])
+			VAR ObservedMonths = VALUES(Tourism[month_number])
+			VAR Cities = VALUES(Tourism[municipality_code])
+			VAR PriorRows =
+			    CALCULATETABLE(
+			        Tourism,
+			        REMOVEFILTERS(Tourism),
+			        TREATAS(Cities, Tourism[municipality_code]),
+			        Tourism[year] = ChosenYear - 1,
+			        TREATAS(ObservedMonths, Tourism[month_number])
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK(ChosenYear)
+			            && COUNTROWS(Tourism) > 0
+			            && COUNTROWS(PriorRows) = COUNTROWS(ObservedMonths) * COUNTROWS(Cities),
+			        SUMX(PriorRows, Tourism[foreign_nights])
+			    )
+		formatString: #,0
+		displayFolder: Period comparison
+		lineageTag: e1d17fc5-d62d-51f9-85d6-43e57560b8bd
+
+	measure 'Nights Change' = IF(NOT ISBLANK([Nights Previous Period]), [Total Nights] - [Nights Previous Period])
+		formatString: +#,0;-#,0;0
+		displayFolder: Period comparison
+		lineageTag: 99fe03f9-9aef-502a-a12a-c6becccf07ad
+
+	measure 'Nights YoY' = IF(NOT ISBLANK([Nights Previous Period]), DIVIDE([Total Nights] - [Nights Previous Period], [Nights Previous Period]))
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: Period comparison
+		lineageTag: 2821142f-3f65-554a-b98d-c1fa2446236a
+
+	measure 'Domestic YoY' = IF(NOT ISBLANK([Domestic Previous Period]), DIVIDE([Domestic Nights] - [Domestic Previous Period], [Domestic Previous Period]))
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: Period comparison
+		lineageTag: 2940d99f-f8e0-5887-8ff4-733f6ac8a1de
+
+	measure 'Foreign YoY' = IF(NOT ISBLANK([Foreign Previous Period]), DIVIDE([Foreign Nights] - [Foreign Previous Period], [Foreign Previous Period]))
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: Period comparison
+		lineageTag: 06acda47-a2c4-5b70-abab-4b483a8e6e5b
+
+	measure 'Foreign Share Change pp' =
+			VAR PriorShare = DIVIDE([Foreign Previous Period], [Nights Previous Period])
+			RETURN IF(NOT ISBLANK(PriorShare), ([Foreign Share] - PriorShare) * 100)
+		formatString: +0.00 "pp";-0.00 "pp";0.00 "pp"
+		displayFolder: Period comparison
+		lineageTag: 8c1ed929-2995-516c-a3e5-2b0b2e14460e
+
+	measure 'Selected Period' =
+			VAR FirstMonth = MIN(Tourism[month])
+			VAR LastMonth = MAX(Tourism[month])
+			VAR MonthCount = DISTINCTCOUNT(Tourism[month])
+			VAR IsPreliminary = COUNTROWS(FILTER(Tourism, Tourism[is_preliminary] = TRUE())) > 0
+			RETURN
+			    IF(
+			        NOT HASONEVALUE(Tourism[year]),
+			        "Select one year",
+			        "Period: " & FORMAT(FirstMonth, "dd MMM yyyy")
+			            & " — " & FORMAT(EOMONTH(LastMonth, 0), "dd MMM yyyy")
+			            & "  |  Months: " & FORMAT(MonthCount, "0")
+			            & IF(IsPreliminary, "  |  Preliminary data", "")
+			    )
+		displayFolder: Captions and source
+		lineageTag: e251fae6-df7b-5094-b962-31b86301caf1
+
+	measure 'Comparison Context' =
+			VAR ChosenYear = SELECTEDVALUE(Tourism[year])
+			VAR FirstMonth = MIN(Tourism[month_number])
+			VAR LastMonth = MAX(Tourism[month_number])
+			RETURN
+			    IF(
+			        ISBLANK([Nights Previous Period]),
+			        "Prior-year comparison unavailable: the same months are not fully covered.",
+			        "Comparison: " & FORMAT(DATE(ChosenYear - 1, FirstMonth, 1), "MM.yyyy")
+			            & " — " & FORMAT(DATE(ChosenYear - 1, LastMonth, 1), "MM.yyyy")
+			            & ": same calendar months only. Change: "
+			            & FORMAT([Nights Change], "+#,0;-#,0;0") & " hotel nights."
+			    )
+		displayFolder: Captions and source
+		lineageTag: b5b3da1d-2984-571c-bd36-8defaf4ad6d4
+
+	measure 'Data Status' =
+			VAR LatestMonth = CALCULATE(MAX(Tourism[month]), REMOVEFILTERS(Tourism))
+			VAR Retrieved = CALCULATE(MAX(Tourism[retrieved_at_utc]), REMOVEFILTERS(Tourism))
+			RETURN
+			    "StatFin 11lm  |  Data through " & FORMAT(LatestMonth, "MM.yyyy")
+			        & "  |  Retrieved: " & FORMAT(Retrieved, "dd MMM yyyy")
+			        & "  |  Power BI import: use Refresh"
+		displayFolder: Captions and source
+		lineageTag: 924afb5d-bd17-5867-a021-a4d7725a862a
+
+	measure 'Domestic Month Share' =
+			VAR YearMonths = CALCULATE(DISTINCTCOUNT(Tourism[month]), ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			VAR YearTotal = CALCULATE([Domestic Nights], ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			RETURN IF(HASONEVALUE(Tourism[year]) && YearMonths = 12, DIVIDE([Domestic Nights], YearTotal))
+		formatString: 0.00%
+		displayFolder: Seasonality
+		lineageTag: 238c9054-1018-5013-ac32-323acccd912d
+
+	measure 'Domestic Summer Share' =
+			VAR YearMonths = CALCULATE(DISTINCTCOUNT(Tourism[month]), ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			VAR SummerTotal = CALCULATE([Domestic Nights], Tourism[month_number] IN {6, 7, 8})
+			RETURN IF(HASONEVALUE(Tourism[year]) && YearMonths = 12, DIVIDE(SummerTotal, [Domestic Nights]))
+		formatString: 0.00%
+		displayFolder: Seasonality
+		lineageTag: b33b243a-4b97-5da7-b34e-116904d78a04
+
+	measure 'Foreign Month Share' =
+			VAR YearMonths = CALCULATE(DISTINCTCOUNT(Tourism[month]), ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			VAR YearTotal = CALCULATE([Foreign Nights], ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			RETURN IF(HASONEVALUE(Tourism[year]) && YearMonths = 12, DIVIDE([Foreign Nights], YearTotal))
+		formatString: 0.00%
+		displayFolder: Seasonality
+		lineageTag: 6e0c9b8e-f807-5608-9d80-a63814ba919b
+
+	measure 'Foreign Summer Share' =
+			VAR YearMonths = CALCULATE(DISTINCTCOUNT(Tourism[month]), ALLEXCEPT(Tourism, Tourism[year], Tourism[municipality_code]))
+			VAR SummerTotal = CALCULATE([Foreign Nights], Tourism[month_number] IN {6, 7, 8})
+			RETURN IF(HASONEVALUE(Tourism[year]) && YearMonths = 12, DIVIDE(SummerTotal, [Foreign Nights]))
+		formatString: 0.00%
+		displayFolder: Seasonality
+		lineageTag: 32cdce59-835d-52e4-b7dc-4d5f1a5db5fc
+
+	measure 'Peak Month' =
+			VAR MonthlyTotals = SUMMARIZE(Tourism, Tourism[month_number], "Nights", [Total Nights])
+			VAR Peak = TOPN(1, MonthlyTotals, [Nights], DESC, Tourism[month_number], ASC)
+			VAR PeakNumber = MAXX(Peak, Tourism[month_number])
+			RETURN IF(HASONEVALUE(Tourism[year]), SWITCH(PeakNumber, 1, "January", 2, "February", 3, "March", 4, "April", 5, "May", 6, "June", 7, "July", 8, "August", 9, "September", 10, "October", 11, "November", 12, "December"))
+		displayFolder: Seasonality
+		lineageTag: 90e9868d-35d9-5422-9935-5a4526b86604
+
+	measure 'Turku YoY' = CALCULATE([Nights YoY], REMOVEFILTERS(Tourism[City]), Tourism[municipality_code] = "853")
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: City comparison
+		lineageTag: c2626bc7-7910-567a-8d5a-bdbde2a81ff1
+
+	measure 'Tampere YoY' = CALCULATE([Nights YoY], REMOVEFILTERS(Tourism[City]), Tourism[municipality_code] = "837")
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: City comparison
+		lineageTag: e9e841e0-96ef-55d2-8114-bd8939e3585d
+
+	measure 'Oulu YoY' = CALCULATE([Nights YoY], REMOVEFILTERS(Tourism[City]), Tourism[municipality_code] = "564")
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: City comparison
+		lineageTag: 0635de3b-3518-5b17-b88f-14c4b2dfc6ec
+
+	measure 'Domestic Contribution pp' =
+			IF(NOT ISBLANK([Domestic Previous Period]),
+			    100 * DIVIDE([Domestic Nights] - [Domestic Previous Period], [Nights Previous Period]))
+		formatString: +0.00 "pp";-0.00 "pp";0.00 "pp"
+		displayFolder: City comparison
+		lineageTag: a8a9c094-d707-5751-9b3e-534ac4a9e27b
+
+	measure 'Foreign Contribution pp' =
+			IF(NOT ISBLANK([Foreign Previous Period]),
+			    100 * DIVIDE([Foreign Nights] - [Foreign Previous Period], [Nights Previous Period]))
+		formatString: +0.00 "pp";-0.00 "pp";0.00 "pp"
+		displayFolder: City comparison
+		lineageTag: d8319021-7553-5ca0-bbdd-64d0b24acf30
+
+	measure 'Profile Year' =
+			VAR Chosen = SELECTEDVALUE(Tourism[year])
+			VAR ThisRows = CALCULATE(COUNTROWS(Tourism), REMOVEFILTERS(Tourism), Tourism[year] = Chosen)
+			VAR PriorRows = CALCULATE(COUNTROWS(Tourism), REMOVEFILTERS(Tourism), Tourism[year] = Chosen - 1)
+			RETURN IF(NOT ISBLANK(Chosen), IF(ThisRows = 36, Chosen, IF(PriorRows = 36, Chosen - 1)))
+		formatString: 0
+		displayFolder: City comparison
+		lineageTag: 7ddbd60f-8781-5155-ac08-55d8d2f34e17
+
+	measure 'Profile Context' =
+			VAR Y = [Profile Year]
+			RETURN IF(ISBLANK(Y), "No complete year available for seasonality",
+			    "Seasonality: " & FORMAT(Y, "0") & ". Monthly share of each city’s annual hotel nights (12 months)."
+			    & IF(Y <> SELECTEDVALUE(Tourism[year]), " Selected year is incomplete.", ""))
+		displayFolder: City comparison
+		lineageTag: 047b23d0-2b82-53c9-b66b-5409991a6d7f
+
+	measure 'Turku Annual Profile' =
+			VAR Y = [Profile Year]
+			VAR Months = VALUES('Profile Months'[Month Number])
+			VAR Numerator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "853", Tourism[year] = Y, TREATAS(Months, Tourism[month_number]))
+			VAR Denominator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "853", Tourism[year] = Y)
+			RETURN IF(NOT ISBLANK(Y), DIVIDE(Numerator, Denominator))
+		formatString: 0.00%
+		displayFolder: City comparison
+		lineageTag: 0175566a-b15c-5875-95ab-b78ec5876dea
+
+	measure 'Tampere Annual Profile' =
+			VAR Y = [Profile Year]
+			VAR Months = VALUES('Profile Months'[Month Number])
+			VAR Numerator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "837", Tourism[year] = Y, TREATAS(Months, Tourism[month_number]))
+			VAR Denominator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "837", Tourism[year] = Y)
+			RETURN IF(NOT ISBLANK(Y), DIVIDE(Numerator, Denominator))
+		formatString: 0.00%
+		displayFolder: City comparison
+		lineageTag: 036872f6-0506-538a-b329-cfe0ab7bceae
+
+	measure 'Oulu Annual Profile' =
+			VAR Y = [Profile Year]
+			VAR Months = VALUES('Profile Months'[Month Number])
+			VAR Numerator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "564", Tourism[year] = Y, TREATAS(Months, Tourism[month_number]))
+			VAR Denominator = CALCULATE([Total Nights], REMOVEFILTERS(Tourism),
+			    Tourism[municipality_code] = "564", Tourism[year] = Y)
+			RETURN IF(NOT ISBLANK(Y), DIVIDE(Numerator, Denominator))
+		formatString: 0.00%
+		displayFolder: City comparison
+		lineageTag: 353fe263-64fa-54c0-86da-19571cb06780
+
+	measure 'City Period' =
+			VAR Chosen = SELECTEDVALUE(Tourism[year])
+			VAR FirstMonth = MIN(Tourism[month])
+			VAR LastMonth = MAX(Tourism[month])
+			RETURN IF(NOT ISBLANK(Chosen), FORMAT(FirstMonth, "MM.yyyy") & " — " & FORMAT(LastMonth, "MM.yyyy")
+			    & " versus the same months of " & FORMAT(Chosen - 1, "0")
+			    & IF(Chosen = 2019, ": no 2018 baseline", "")
+			    & IF(COUNTROWS(FILTER(Tourism, Tourism[is_preliminary] = TRUE())) > 0, " | Preliminary data", ""))
+		displayFolder: City comparison
+		lineageTag: 1a2e545c-ac4b-5c54-a201-f88a6c515ac0
+
+	column municipality_code
+		dataType: string
+		lineageTag: ecd3a327-159a-40a5-839c-3bfb754323ee
+		summarizeBy: none
+		sourceColumn: municipality_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2b6d5fd2-ceb2-4da9-a89d-c24b0deff51f
+		summarizeBy: none
+		sourceColumn: month
+
+		variation Variation
+			isDefault
+			relationship: 5dafcb89-37c0-4471-bb44-f29658a25e66
+			defaultHierarchy: LocalDateTable_343b1332-e247-441e-a7a1-7602260186c7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: a177baac-42d6-4b76-ac02-ad0629dce56d
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 101a0aa8-cc77-451d-841c-fe5719d85349
+		summarizeBy: none
+		sourceColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column hotel_nights
+		dataType: int64
+		formatString: 0
+		lineageTag: 560681ba-25ff-4f75-b2e6-ff06ee4366a5
+		summarizeBy: sum
+		sourceColumn: hotel_nights
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_preliminary
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3cf2919a-c650-4fb1-b3d3-dba32b120599
+		summarizeBy: none
+		sourceColumn: is_preliminary
+
+		annotation SummarizationSetBy = Automatic
+
+	column retrieved_at_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 059281fd-daac-416b-8b35-be662b4d567a
+		summarizeBy: none
+		sourceColumn: retrieved_at_utc
+
+		variation Variation
+			isDefault
+			relationship: 61217695-70ff-45ad-b939-4ee187d51c16
+			defaultHierarchy: LocalDateTable_74d683d5-b532-40f8-b346-3a87b52944b0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column months_in_year
+		dataType: int64
+		formatString: 0
+		lineageTag: bdc10083-23fa-4f4e-943f-175a4d51be26
+		summarizeBy: none
+		sourceColumn: months_in_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_complete_year
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f6699721-49e5-4898-83af-07604079e2e2
+		summarizeBy: none
+		sourceColumn: is_complete_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_total_nights
+		dataType: int64
+		formatString: 0
+		lineageTag: 072b2a91-64a5-40a9-8f45-cb2b05d4517d
+		summarizeBy: none
+		sourceColumn: year_total_nights
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_share_pct
+		dataType: double
+		lineageTag: 09ffb408-fa09-467b-928f-4ad47e52d7ef
+		summarizeBy: none
+		sourceColumn: month_share_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column domestic_nights
+		dataType: int64
+		formatString: 0
+		lineageTag: 68a15e81-8036-439f-a927-183595e36b42
+		summarizeBy: sum
+		sourceColumn: domestic_nights
+
+		annotation SummarizationSetBy = Automatic
+
+	column foreign_nights
+		dataType: int64
+		formatString: 0
+		lineageTag: 3180e109-4144-477d-87f5-e55d3809c951
+		summarizeBy: sum
+		sourceColumn: foreign_nights
+
+		annotation SummarizationSetBy = Automatic
+
+	column foreign_nights_share_pct
+		dataType: double
+		lineageTag: 1d7afe58-b07a-4d04-b573-d0ae64dcc675
+		summarizeBy: none
+		sourceColumn: foreign_nights_share_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Month Name' = SWITCH(Tourism[month_number], 1, "Jan", 2, "Feb", 3, "Mar", 4, "Apr", 5, "May", 6, "Jun", 7, "Jul", 8, "Aug", 9, "Sep", 10, "Oct", 11, "Nov", 12, "Dec")
+		dataType: string
+		lineageTag: 2065238c-7a65-5245-8afb-82af971f3b86
+		summarizeBy: none
+		sortByColumn: month_number
+
+	column City = SWITCH(Tourism[municipality_code], "853", "Turku", "837", "Tampere", "564", "Oulu", Tourism[municipality_code])
+		dataType: string
+		lineageTag: ce8c7c28-6a52-512f-b93d-0bc0b214d976
+		summarizeBy: none
+
+	partition Tourism = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "turku_bi"),
+				    marts_tourism_seasonality = Source{[Schema="marts",Item="tourism_seasonality"]}[Data]
+				in
+				    marts_tourism_seasonality
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

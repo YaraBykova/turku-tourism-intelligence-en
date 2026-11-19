@@ -1,0 +1,12 @@
+name: turku_bi
+version: "1.0.0"
+config-version: 2
+
+profile: turku_bi
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  turku_bi:
+    +materialized: view

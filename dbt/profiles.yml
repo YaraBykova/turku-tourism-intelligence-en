@@ -1,0 +1,13 @@
+turku_bi:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('TURKU_POSTGRES_HOST', 'postgres') }}"
+      port: "{{ env_var('TURKU_POSTGRES_PORT', '5432') | int }}"
+      user: turku
+      password: "{{ env_var('TURKU_POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('TURKU_POSTGRES_DB', 'turku_bi') }}"
+      schema: marts
+      threads: 1
+      connect_timeout: 10

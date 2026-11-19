@@ -1,0 +1,22 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Tourism"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Tourism
+ref table DateTableTemplate_a07bbfe5-ffa9-4c1b-b8dc-36c5758e680f
+ref table LocalDateTable_343b1332-e247-441e-a7a1-7602260186c7
+ref table LocalDateTable_74d683d5-b532-40f8-b346-3a87b52944b0
+ref table 'Profile Months'
+
+ref cultureInfo en-GB

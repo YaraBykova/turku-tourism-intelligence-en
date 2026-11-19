@@ -1,0 +1,48 @@
+name: map_turku_data
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: turku_bi
+      POSTGRES_USER: turku
+      POSTGRES_PASSWORD: ${TURKU_POSTGRES_PASSWORD:?Set the password in .env}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - turku_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "turku", "-d", "turku_bi"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  airflow:
+    image: turku-airflow:3.4.0
+    build: ./airflow
+    command: standalone
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      TURKU_POSTGRES_HOST: postgres
+      TURKU_POSTGRES_PORT: "5432"
+      TURKU_POSTGRES_PASSWORD: ${TURKU_POSTGRES_PASSWORD}
+      MPLBACKEND: Agg
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - turku_airflow:/opt/airflow
+      - ./dags:/opt/airflow/dags:ro
+      - ./ingestion:/opt/turku/ingestion:ro
+      - ./analysis:/opt/turku/analysis:ro
+      - ./sql:/opt/turku/sql:ro
+      - ./data:/opt/turku/data
+      - ./reports:/opt/turku/reports
+      - ./dbt:/opt/turku/dbt
+
+volumes:
+  turku_pgdata:
+  turku_airflow:

@@ -1,0 +1,20 @@
+table 'Profile Months'
+	lineageTag: 9a344b90-42cb-5360-882d-a415651960ef
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6baccfc0-8e3c-4ff5-a075-7f5159e3ef5a
+		summarizeBy: none
+		sourceColumn: [Month Number]
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 6a51e105-806a-4b95-a02a-850029fb481a
+		summarizeBy: none
+		sourceColumn: [Month Name]
+		sortByColumn: 'Month Number'
+
+	partition 'Profile Months' = calculated
+		mode: import
+		source = DATATABLE("Month Number", INTEGER, "Month Name", STRING, {{1,"Jan"},{2,"Feb"},{3,"Mar"},{4,"Apr"},{5,"May"},{6,"Jun"},{7,"Jul"},{8,"Aug"},{9,"Sep"},{10,"Oct"},{11,"Nov"},{12,"Dec"}})

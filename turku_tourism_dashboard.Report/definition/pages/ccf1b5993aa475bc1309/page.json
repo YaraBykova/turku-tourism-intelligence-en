@@ -1,0 +1,287 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ccf1b5993aa475bc1309",
+  "displayName": "01 · Overview",
+  "displayOption": "FitToPage",
+  "width": 1600,
+  "height": 1000,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "929cc449e08a5d56976a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "ce3c9d3de6ee5245b718",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "a5d10e8b8a9756e2a1c9",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "c32b96ae471580873230",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "619ca127c7b851ca9b19",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "f827fd36981e5b0eb11a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "3cbfa83fbd6a57fd98e8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "727f261b000abd6aa193",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "5d1b3fce99fa5e79b1d0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "5537a656bad95e7097d5",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "5d2d5d5ef64a578881ad",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "004958773ef55c7ea056",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "f9648f1aaf8f5df59c99",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "20f011ba583558aa9048",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "491e88d260f55dc9ab1e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "3accad6e96555a6aaf2e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "76a7cb92778f5adabf6c",
+      "target": "18868a7bc99854c597e3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "929cc449e08a5d56976a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "ce3c9d3de6ee5245b718",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "a5d10e8b8a9756e2a1c9",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "c32b96ae471580873230",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "619ca127c7b851ca9b19",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "f827fd36981e5b0eb11a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "3cbfa83fbd6a57fd98e8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "727f261b000abd6aa193",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "5d1b3fce99fa5e79b1d0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "5537a656bad95e7097d5",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "5d2d5d5ef64a578881ad",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "004958773ef55c7ea056",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "f9648f1aaf8f5df59c99",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "20f011ba583558aa9048",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "491e88d260f55dc9ab1e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "3accad6e96555a6aaf2e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "18868a7bc99854c597e3",
+      "target": "76a7cb92778f5adabf6c",
+      "type": "NoFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "filter_municipality_code",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Tourism"
+              }
+            },
+            "Property": "municipality_code"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "t",
+              "Entity": "Tourism",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "t"
+                          }
+                        },
+                        "Property": "municipality_code"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'853'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

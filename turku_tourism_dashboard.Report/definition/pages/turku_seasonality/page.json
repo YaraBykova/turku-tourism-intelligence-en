@@ -1,0 +1,300 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "turku_seasonality",
+  "displayName": "02 · Seasonality",
+  "displayOption": "FitToPage",
+  "width": 1600,
+  "height": 1000,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F3F6F9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "filter_is_complete_year",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Tourism"
+              }
+            },
+            "Property": "is_complete_year"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "t",
+              "Entity": "Tourism",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "t"
+                          }
+                        },
+                        "Property": "is_complete_year"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "true"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "filter_municipality_code",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Tourism"
+              }
+            },
+            "Property": "municipality_code"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "t",
+              "Entity": "Tourism",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "t"
+                          }
+                        },
+                        "Property": "municipality_code"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'853'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "86c150c8039c50daba4d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "9274a758d563563a85ac",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "7a14e587a31e55c7a4a0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "a6951cfafb9d51259e6b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "3a36e5fbcd325ec486e3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "243d86b97a045b04a84b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "6d3d37899dac50399295",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "6b82532078835b6d8d85",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "f066944b096d5bc7aa89",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "052e0c015f295a86ae6c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "985ae899266f57e5a629",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "0b830a7eaf3855c3b488",
+      "type": "NoFilter"
+    },
+    {
+      "source": "56d7aedf19af57eb81ae",
+      "target": "9d452da8f8ac506ab08a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "86c150c8039c50daba4d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "9274a758d563563a85ac",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "7a14e587a31e55c7a4a0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "a6951cfafb9d51259e6b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "3a36e5fbcd325ec486e3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "243d86b97a045b04a84b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "6d3d37899dac50399295",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "6b82532078835b6d8d85",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "f066944b096d5bc7aa89",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "052e0c015f295a86ae6c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "985ae899266f57e5a629",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "0b830a7eaf3855c3b488",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9d452da8f8ac506ab08a",
+      "target": "56d7aedf19af57eb81ae",
+      "type": "NoFilter"
+    }
+  ]
+}

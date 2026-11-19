@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "json_schema_files": 53,
+  "pages": [
+    {
+      "page": "01 · Overview",
+      "visuals": 18
+    },
+    {
+      "page": "03 · City comparison",
+      "visuals": 15
+    },
+    {
+      "page": "02 · Seasonality",
+      "visuals": 14
+    }
+  ],
+  "measures": 31,
+  "numeric_measure_expressions_identical": 25,
+  "unchanged_core_data_files": 41,
+  "python_tests": 21,
+  "remaining_cyrillic_text": [],
+  "known_secret_hits": [],
+  "credentials_and_caches_excluded": true,
+  "source_and_sql_preserved": true,
+  "english_visual_check": "pending",
+  "source_snapshot_unchanged": true,
+  "model_culture": "en-GB",
+  "runtime_english_dax": "Not executed: Power BI engine was closed. All 25 numeric expressions are byte-identical; six text measures were translated.",
+  "visual_english_layout": "Pending opening the English PBIP and refreshing import.",
+  "second_stack_started": false
+}

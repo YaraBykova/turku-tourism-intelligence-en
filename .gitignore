@@ -1,0 +1,21 @@
+# Credentials
+.env
+.env.*
+!.env.example
+
+# Local Power BI files
+**/.pbi/
+*.pbix
+
+# Python and generated dbt files
+__pycache__/
+*.py[cod]
+.venv/
+**/dbt/target/
+**/dbt/logs/
+**/dbt/.user.yml
+
+# Temporary OS files
+.DS_Store
+Thumbs.db
+*.tmp

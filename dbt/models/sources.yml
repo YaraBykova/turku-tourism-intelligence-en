@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: statfin
+    schema: public
+    description: "Statistics Finland data loaded by the Python pipeline."
+    tables:
+      - name: hotel_nights_monthly
+        description: "Hotel nights by municipality and month."
