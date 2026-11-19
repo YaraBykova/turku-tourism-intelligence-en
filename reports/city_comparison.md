@@ -50,8 +50,6 @@ On the city-profile chart, each month is divided by that city's own full-year to
 
 Turku's increase was supported by both segments. Its position between Tampere and Oulu limits a claim that Turku was exceptionally fast-growing. Its higher summer concentration is relevant context when planning seasonal tourism services; however, 64.08% of Turku's 2025 hotel nights occurred outside June–August.
 
-Selecting a souvenir-store location would still require entrance-level footfall, rent, competition, conversion and cost data. Municipality-level nights do not select premises or establish sales potential.
-
 ## Reproduction
 
 - Source: [StatFin 11lm](https://pxdata.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__matk/11lm.px), Statistics Finland, CC BY 4.0; unit: hotel night, grain: municipality × calendar month.
@@ -68,4 +66,4 @@ Selecting a souvenir-store location would still require entrance-level footfall,
 
 [Oulu's European Capital of Culture 2026 status is an official EU title](https://culture.ec.europa.eu/fr/news/two-european-capitals-of-culture-in-2026), not a ranking produced by this analysis. Event effects, capacity, prices, business travel and other influences are not estimated. Nights reflect available supply as well as demand, and this analysis does not measure unmet demand.
 
-Two comparison cities do not support generalisation to all Finland. Results are not a causal explanation, forecast, investment ranking or store-profit estimate.
+Two comparison cities do not support generalisation to all Finland. Results are not a causal explanation or forecast.

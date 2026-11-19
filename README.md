@@ -118,14 +118,12 @@ The existing containers were used for these checks. A complete cold deployment o
 
 ## Interpretation limits
 
-- Hotel nights are not unique visitors, pedestrian footfall or souvenir sales.
+- Hotel nights are not unique visitors.
 - 2026 values are preliminary and may be revised.
 - [Hotel classification changed in 2025](https://stat.fi/en/documentation/changes-in-statistics/cmj86bfdy90vs07uk47jbqm2i), limiting comparability with earlier years. The headline comparison is 2026 versus 2025.
 - [Oulu holds the official EU title European Capital of Culture 2026](https://culture.ec.europa.eu/fr/news/two-european-capitals-of-culture-in-2026). Event effects are not estimated.
 - This three-city group is not representative of every Finnish city. Differences in hotel capacity, prices, business travel and other factors are not controlled for. Observed nights do not estimate unmet demand.
-- No forecasting, causal inference, store-site selection or profitability estimate is claimed.
-
-The original souvenir-shop idea survives as a separate [break-even scenario](reports/optional_store_scenario.md). Its assumptions are not observed sales or footfall. It is not needed to reproduce the hotel-night analysis.
+- No forecasting or causal inference is claimed.
 
 ## Language editions
 
