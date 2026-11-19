@@ -129,8 +129,6 @@ The original souvenir-shop idea survives as a separate [break-even scenario](rep
 
 ## Language editions
 
-This repository is the standalone English edition. Its README, pipeline, Power BI definitions and three-page PDF are available directly from the repository root.
-
 Русская версия: [Turku Tourism Intelligence — русский репозиторий](https://github.com/YaraBykova/turku-tourism-intelligence).
 
-Both editions use the same verified source data and numeric calculations. Run one edition's Compose stack at a time: the configurations share a fixed project name and default ports. No online Power BI Service publication is claimed.
+Both editions contain the same data and calculations.
